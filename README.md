@@ -1,64 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+-----------------------------overview----------------------------
+-calculator will operate on two numbers and one operator.
+-the calculator has buttons and a display,clicking the buttons 
+ will show the digits in the display.
+-string from display will be rendered to server, server will 
+ process it and send back to the display
+------------------------------------------------------------------
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+------------------------------approch-----------------------------
+*******front end*******
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#1. user.blade.php:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.all digit buttons and emojis are in the form, form has a display.
+  clicking buttons show digit and operator on display, "=" is the
+  submit button.
+2.when "=" is clicked, the texts in the display are sent to server
+ through web.php
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+*******routing**********
 
-## Learning Laravel
+#2. web.php:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1.route renders the values to "CalculatorController.php".
+  it sends the values to "getData" function.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*******server side calculation******** 
+ 
+#3. CalculatorController.php:
 
-## Laravel Sponsors
+1.function receives the string or text .
+2.the it finds which operator is used for the calculation through 
+  "strpos()" fuction. 
+3.when operator is found it then divides the string into 2 numbers
+  using explode() and array_map() funtions.
+4.calculation is done according to the operator.
+5.in "division" if there is any "1/0", it will result will be 
+  "undefined".
+6.if there is wrong syntax , it result will be "invalid syntax".
+7. result then will be encoded by "json"
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+8. in "user.blade.php" this "json" file will be decoded and result
+  will be displayed in the display portion.
+-------------------------------------------------------------------
 
-### Premium Partners
+--------------------------------steps------------------------------
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+1.install laravel 9 and open xampp control panel and start "Apache"
+2.open command prompt and change the directory to the project folder
 
-## Contributing
+i.e ->cd C:\xampp\htdocs\Laravel\simple_calculator
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3.write "php artisan serve" and hit enter.
+4.it will show a port number i.e-8000.
+5. open a browser and write the url-> "localhost/port number/" and enter
+   i.e->localhost/8000/ 
+6. this will show the calculator.
 
-## Code of Conduct
+-------------------------------------------------------------------
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+-------------------------------files-------------------------------
+controllers->
+App\Http\Controllers\CalculatorController.php
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+routes->
+routes\web.php
 
-## License
+html->
+resources\views\user.blade.php
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+css->
+public\css\calc.css
+-------------------------------------------------------------------
+
+
+
+
