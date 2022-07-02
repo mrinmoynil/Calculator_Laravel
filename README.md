@@ -69,3 +69,7 @@ public\css\calc.css
 
 
 
+<img src="images/add.png" width="100" height=100>
+<img src="images/add_result.png" width="100" height=100>
+
+
